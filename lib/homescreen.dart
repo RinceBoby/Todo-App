@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: ValueListenableBuilder(
         valueListenable: todoBox.listenable(),
-        builder: (context, Box<dynamic> box, _) {
+        builder: (context, Box box, _) {
           if (box.isEmpty) {
             return const Center(
               child: Text(
@@ -60,6 +60,16 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (context, index) {
                 ToDo toDo = box.getAt(index);
                 return ListTile(
+                  leading: Checkbox(
+                    value: toDo.isCompleted, 
+                    onChanged: (value) {
+                      ToDo newToDO = ToDo(
+                        title: toDo.title,
+                        isCompleted: value!,
+                      );
+                      box.putAt(index, newToDO);
+                    },
+                  ),
                   title: Text(
                     toDo.title,
                     style: TextStyle(
@@ -71,16 +81,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           ? TextDecoration.lineThrough
                           : TextDecoration.none,
                     ),
-                  ),
-                  leading: Checkbox(
-                    value: toDo.isCompleted,
-                    onChanged: (value) {
-                      ToDo newToDO = ToDo(
-                        title: toDo.title,
-                        isCompleted: value!,
-                      );
-                      box.putAt(index, newToDO);
-                    },
                   ),
                   trailing: Wrap(
                     children: [
@@ -94,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               content: TextFormField(
                                 controller: editedText,
                                 decoration: const InputDecoration(
-                                  labelText: "Title to Edit",
+                                  labelText: "Edited Text",
                                   border: OutlineInputBorder(),
                                 ),
                                 style: const TextStyle(
@@ -137,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                   child: const Text(
                                     "Ok",
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 20,
                                       color: Colors.green,
                                     ),
@@ -176,15 +176,6 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           }
         },
-        child: ElevatedButton(
-            onPressed: () {},
-            child: const Text(
-              "Add new TODO",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            )),
       ),
 
       //Container(
@@ -238,6 +229,7 @@ class _HomeScreenState extends State<HomeScreen> {
 //<<<<<Capitalize_First_Letter>>>>>//
 extension CapitalExtension on String {
   String capitalise() {
+    // ignore: unnecessary_this
     return "${this[0].toUpperCase()}${this.substring(1)}";
   }
 }

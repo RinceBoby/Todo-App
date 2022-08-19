@@ -3,6 +3,7 @@ part 'todo.g.dart';
 
 @HiveType(typeId: 10)
 class ToDo {
+  
   @HiveField(0)
   final String title;
 

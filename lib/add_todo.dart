@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_db/homescreen.dart';
 import 'package:hive_db/todo.dart';
 
+// ignore: must_be_immutable
 class AddToDO extends StatelessWidget {
   AddToDO({Key? key}) : super(key: key);
   TextEditingController titleController = TextEditingController();
@@ -60,23 +61,22 @@ class AddToDO extends StatelessWidget {
                           ),
                           onPressed: () {
                             if (_formKey.currentState!.validate() == true) {}
-                            if (titleController.text != '') {
-                              ToDo newTodo = ToDo(
-                                title: titleController.text.capitalise(),
-                                isCompleted: false,
-                              );
-                              todoBox.add(newTodo);
-                              Navigator.pop(context);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    "Todo Added Successfully",
-                                  ),
-                                  backgroundColor:
-                                      Color.fromARGB(255, 64, 20, 129),
+
+                            ToDo newTodo = ToDo(
+                              title: titleController.text.capitalise(),
+                              isCompleted: false,
+                            );
+                            todoBox.add(newTodo);
+                            Navigator.pop(context);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  "Todo Added Successfully",
                                 ),
-                              );
-                            }
+                                backgroundColor:
+                                    Color.fromARGB(255, 64, 20, 129),
+                              ),
+                            );
                           },
                           child: const Text(
                             "Add Todo",

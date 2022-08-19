@@ -13,7 +13,6 @@ void main() async {
   Hive.registerAdapter(ToDoAdapter()); //Register Adapter//
   await Hive.openBox<ToDo>(boxName); //Open NewBox//
   //await Hive.openBox('Friend');
-
   runApp(const MyApp());
 }
 
